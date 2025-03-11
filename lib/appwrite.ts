@@ -21,26 +21,31 @@ export const account = new Account(client);
 export async function login() {
   try {
     const redirectUri = Linking.createURL("/");
+    console.log("Redirect URI:", redirectUri);
 
     const response = await account.createOAuth2Token(
       OAuthProvider.Google,
       redirectUri
     );
+    console.log("OAuth2 Token Response:", response);
 
-    if (!response) throw new Error("faild to login");
+    if (!response) throw new Error("No response from OAuth2 Token");
     const browserResult = await openAuthSessionAsync(
       response.toString(),
       redirectUri
     );
+    console.log("Browser Result:", browserResult);
 
-    if (browserResult.type !== "success") throw new Error("failed to login");
+    if (browserResult.type !== "success") throw new Error("Unable to login");
 
+    console.log("Browser Result URL:", browserResult.url);
     const url = new URL(browserResult.url);
+    console.log("Parsed URL:", url);
 
     const secret = url.searchParams.get("secret")?.toString();
     const userId = url.searchParams.get("userId")?.toString();
 
-    if (!secret || !userId) throw new Error("Failed to login");
+    if (!secret || !userId) throw new Error("ailed to login");
 
     const session = await account.createSession(userId, secret);
     if (!session) throw new Error("Failed to create session");

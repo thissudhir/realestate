@@ -1,4 +1,7 @@
-import { createContext, ReactNode } from "react";
+import { createContext, ReactNode, useContext } from "react";
+import { useAppwrite } from "./useAppwrite";
+import { getCurrentUser } from "./appwrite";
+import { replace } from "expo-router/build/global-state/routing";
 
 interface User {
   $id: string;
@@ -13,8 +16,36 @@ interface GlobalContextType {
   refetch: (newParams?: Record<string, string | null>) => Promise<void>;
 }
 
-const GlobalContext = createContext<GlobalContextType | undefined>;
+const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
 
 export const GlobalProvider = ({ children }: { children: ReactNode }) => {
-  return <GlobalContext.Provider value={}>{children}</GlobalContext.Provider>;
+  const {
+    data: user,
+    loading,
+    refetch,
+  } = useAppwrite({
+    fn: getCurrentUser,
+    params: {}, // Add appropriate params if needed
+    skip: false, // Set to true or false based on your logic
+  });
+  const isLoggedIn = !!user;
+
+  // console.log(JSON.stringify(user, null, 2));
+
+  return (
+    <GlobalContext.Provider value={{ isLoggedIn, user, loading, refetch }}>
+      {children}
+    </GlobalContext.Provider>
+  );
 };
+
+export const useGlobalContext = (): GlobalContextType => {
+  const context = useContext(GlobalContext);
+
+  if (!context) {
+    throw new Error("Must be used within GlobalProvider");
+  }
+  return context;
+};
+
+export default GlobalProvider;
