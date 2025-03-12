@@ -12,8 +12,22 @@ const TabIcons = ({
   title: string;
 }) => {
   return (
-    <View>
-      <Image source={icon} />
+    <View className="flex-1 mt-3 flex flex-col items-center ">
+      <Image
+        source={icon}
+        tintColor={focused ? "#0061ff" : "#666876"}
+        resizeMode="contain"
+        className="size-6"
+      />
+      <Text
+        className={`text-xs font-bold w-full text-center mt-1 ${
+          focused
+            ? "text-primary-300 font-rubik-medium"
+            : "text-black-200 font-rubik"
+        }`}
+      >
+        {title}
+      </Text>
     </View>
   );
 };
@@ -40,6 +54,26 @@ const TabsLayout = () => {
 
           tabBarIcon: ({ focused }) => (
             <TabIcons focused={focused} icon={icons.home} title="Home" />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="explore"
+        options={{
+          title: "Explore",
+
+          tabBarIcon: ({ focused }) => (
+            <TabIcons focused={focused} icon={icons.search} title="Explore" />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+
+          tabBarIcon: ({ focused }) => (
+            <TabIcons focused={focused} icon={icons.person} title="Profile" />
           ),
         }}
       />
