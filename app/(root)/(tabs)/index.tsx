@@ -1,15 +1,20 @@
 import { FeaturedCards, Cards } from "@/components/Cards";
+import Filter from "@/components/Filter";
 import Search from "@/components/Search";
 import icons from "@/constants/icons";
 import { useGlobalContext } from "@/lib/golobal-provider";
 import { Link } from "expo-router";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   const { user, refetch } = useGlobalContext();
   return (
     <SafeAreaView className="h-full bg-white">
+      <FlatList
+        data={[1, 2, 3, 4]}
+        renderItem={({ item }) => <Text>{item}</Text>}
+      />
       <View className="px-5">
         <View className="flex flex-row items-center justify-between mt-5">
           <View className="flex flex-row items-center ">
@@ -58,6 +63,7 @@ export default function Index() {
           </TouchableOpacity>
         </View>
 
+        <Filter />
         <View className="flex flex-row gap-5 mt-5">
           <Cards />
           <Cards />
