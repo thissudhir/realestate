@@ -13,62 +13,71 @@ export default function Index() {
     <SafeAreaView className="h-full bg-white">
       <FlatList
         data={[1, 2, 3, 4]}
-        renderItem={({ item }) => <Text>{item}</Text>}
-      />
-      <View className="px-5">
-        <View className="flex flex-row items-center justify-between mt-5">
-          <View className="flex flex-row items-center ">
-            <Image
-              source={{ uri: user?.avatar }}
-              className="size-12 rounded-full"
-            />
-            <View className="flex flex-col items-start ml-2 justify-center">
-              <Text className="text-xs font-rubik text-black-100">
-                Good Morning
-              </Text>
-              <Text className="text-base text-black-300 font-rubik-medium">
-                {user?.name}
-              </Text>
+        renderItem={({ item }) => <Cards />}
+        keyExtractor={(item) => item.toString()}
+        numColumns={2}
+        showsVerticalScrollIndicator={false}
+        contentContainerClassName="pb-32"
+        columnWrapperClassName="flex-row gap-5 px-5"
+        ListHeaderComponent={
+          <View className="px-5">
+            <View className="flex flex-row items-center justify-between mt-5">
+              <View className="flex flex-row items-center ">
+                <Image
+                  source={{ uri: user?.avatar }}
+                  className="size-12 rounded-full"
+                />
+                <View className="flex flex-col items-start ml-2 justify-center">
+                  <Text className="text-xs font-rubik text-black-100">
+                    Welcome
+                  </Text>
+                  <Text className="text-base text-black-300 font-rubik-medium">
+                    {user?.name}
+                  </Text>
+                </View>
+              </View>
+              <Image source={icons.bell} className="size-6" />
             </View>
-          </View>
-          <Image source={icons.bell} className="size-6" />
-        </View>
 
-        <Search />
+            <Search />
 
-        <View className="my-5">
-          <View className="flex flex-row items-center justify-between ">
-            <Text className="text-xl text-black-300 font-rubik-bold">
-              Featured
-            </Text>
-            <TouchableOpacity>
-              <Text className="text-base text-primary-300 font-rubik-bold">
-                View All
+            <View className="my-5">
+              <View className="flex flex-row items-center justify-between ">
+                <Text className="text-xl text-black-300 font-rubik-bold">
+                  Featured
+                </Text>
+                <TouchableOpacity>
+                  <Text className="text-base text-primary-300 font-rubik-bold">
+                    View All
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              <FlatList
+                data={[1, 2, 3]}
+                renderItem={({ item }) => <FeaturedCards />}
+                keyExtractor={(item) => item.toString()}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerClassName="flex gap-5 mt-3"
+                bounces={false}
+              />
+            </View>
+            <View className="flex flex-row items-center justify-between ">
+              <Text className="text-xl text-black-300 font-rubik-bold">
+                Popular
               </Text>
-            </TouchableOpacity>
-          </View>
-          <View className="flex flex-row gap-5 mt-5">
-            <FeaturedCards />
-            <FeaturedCards />
-          </View>
-        </View>
-        <View className="flex flex-row items-center justify-between ">
-          <Text className="text-xl text-black-300 font-rubik-bold">
-            Popular
-          </Text>
-          <TouchableOpacity>
-            <Text className="text-base text-primary-300 font-rubik-bold">
-              View All
-            </Text>
-          </TouchableOpacity>
-        </View>
+              <TouchableOpacity>
+                <Text className="text-base text-primary-300 font-rubik-bold">
+                  View All
+                </Text>
+              </TouchableOpacity>
+            </View>
 
-        <Filter />
-        <View className="flex flex-row gap-5 mt-5">
-          <Cards />
-          <Cards />
-        </View>
-      </View>
+            <Filter />
+          </View>
+        }
+      />
     </SafeAreaView>
   );
 }
