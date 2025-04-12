@@ -42,7 +42,6 @@ const SignIn = () => {
           resizeMode="contain" //note: Resize mode to contain the image within the bounds
         />
         <View className="px-10">
-          {" "}
           {/*note: Container for the text and button with padding*/}
           <Text className="text-base text-center uppercase font-rubik text-black-200">
             Welcome to RealEstate {/*note: Welcome text*/}
@@ -53,7 +52,7 @@ const SignIn = () => {
             {/*note: Main heading with highlighted text*/}
           </Text>
           <Text className="text-lg text-center font-rubik text-black-200 mt-12">
-            Login to RealEstate with Google{" "}
+            Login to RealEstate with Google
             {/*note: Instruction text for login*/}
           </Text>
           <TouchableOpacity
